@@ -1575,6 +1575,7 @@ In the file howTo.md you can find more details about translations.
     <string name="key_activeLow_tt">如果选中该选项，则该组件处于活动状态时输出为低电平。</string>
     <string name="key_applicationType_GHDL">GHDL</string>
     <string name="key_applicationType_IVERILOG">IVerilog</string>
+    <string name="key_applicationType_VERILATORJNA">Verilator动态库</string>
     <string name="key_iverilogOptions">IVerilog 选项</string>
     <string name="key_iverilogOptions_tt">IVerilog 选项</string>
     <string name="key_iverilogPath">IVerilog</string>

@@ -65,7 +65,11 @@ public interface Application {
         /**
          * Icarus verilog interpreter
          */
-        IVERILOG
+        IVERILOG,
+        /**
+         * verilator dll wrapper interpreter
+         */
+        VERILATORJNA
     }
 
     /**
@@ -83,6 +87,8 @@ public interface Application {
                 return new ApplicationGHDL(attr);
             case IVERILOG:
                 return new ApplicationIVerilog(attr);
+            case VERILATORJNA:
+                return new ApplicationJNA();
             default:
                 return null;
         }
