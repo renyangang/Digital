@@ -29,6 +29,7 @@ public class JNAInterface implements ProcessInterface {
     private int outputBitLength;
     private int inputByteLength;
     private int outputByteLength;
+    private boolean isInit = false;
 
     /***
      * construction
@@ -48,11 +49,19 @@ public class JNAInterface implements ProcessInterface {
         this.outputByteLength = (this.outputBitLength+7)/8;
         this.inputBuffer = new Memory(this.inputByteLength);
         this.outputBuffer = new Memory(this.outputByteLength);
-        this.dllInterface.cpuLoopInit();
+        this.init();
+    }
+
+    private void init() {
+        if (!this.isInit) {
+            this.dllInterface.cpuLoopInit();
+            this.isInit = true;
+        }
     }
 
     @Override
     public void writeValues(ObservableValues values) throws IOException {
+        this.init();
         int pos = 0;
         for (ObservableValue v : values) {
             final int bits = v.getBits();
@@ -71,6 +80,7 @@ public class JNAInterface implements ProcessInterface {
 
     @Override
     public void readValues(ObservableValues values) throws IOException {
+        this.init();
         this.dllInterface.getOutput(this.outputBuffer, this.outputByteLength);
         this.outSet = BitSet.valueOf(this.outputBuffer.getByteArray(0, this.outputByteLength));
         int pos = 0;
@@ -93,5 +103,6 @@ public class JNAInterface implements ProcessInterface {
     @Override
     public void close() throws IOException {
         this.dllInterface.cpuLoopStop();
+        this.isInit = false;
     }
 }
